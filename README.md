@@ -1,73 +1,62 @@
-#Servidor EC2 com Backup Automático (Data Lifecycle Manager)
+# Servidor EC2 com Backup Automatico Utilizando AWS Data Lifecycle Manager
 
-Este repositório documenta a configuração de uma instância EC2 utilizada para estudos, bem como a criação de uma política automatizada de snapshots no AWS Data Lifecycle Manager (DLM). O objetivo é demonstrar o gerenciamento básico de uma instância EC2 e a implementação de uma rotina de backup confiável do volume EBS.
+Este repositório documenta a criação e configuração de uma instância EC2 para fins de estudo, incluindo a implementação de uma política automática de snapshots do volume EBS utilizando o AWS Data Lifecycle Manager (DLM). O objetivo é demonstrar o uso prático dos principais recursos da AWS relacionados à computação em nuvem e gerenciamento de armazenamento.
 
-1. Descrição do Ambiente
+## 1. Ambiente Utilizado
 
-Serviço: Amazon EC2
+Servico: Amazon EC2  
+Sistema Operacional: Amazon Linux 2023  
+Finalidade: Servidor basico para estudos
 
-Sistema Operacional: Amazon Linux 2023
+### Volume EBS
+- Tipo: gp3  
+- Tamanho: 8 GiB  
+- IOPS: 3000  
+- Throughput: 125 MB/s  
+- Tag aplicada ao volume:
 
-Tipo de instância utilizado: Servidor básico para estudos
+## 2. Politica de Backup Automatico (Data Lifecycle Manager)
 
-Volume EBS:
+Foi configurada uma politica do AWS Data Lifecycle Manager responsavel por criar snapshots automaticos do volume EBS utilizado na instancia EC2.
 
-Tipo: gp3
+### Detalhes da Politica
 
-Tamanho: 8 GiB
+- Tipo de recurso alvo: Volume  
+- Filtro por tags:
+- Descricao da politica:
+- Role utilizada: AWSDataLifecycleManagerDefaultRole  
+- Status: Enabled
 
-IOPS: 3000
+## 3. Configuracao do Agendamento
 
-Throughput: 125 MB/s
+- Nome do agendamento: Schedule 1  
+- Frequencia: A cada 12 horas  
+- Horario inicial: 09:00  
+- Retencao: Manter apenas os 3 snapshots mais recentes
 
-Tag do volume utilizada para aplicar a política:
+## 4. Objetivo do Projeto
 
-Name = Servidor basico para estudos
+Este projeto demonstra:
 
-2. Configuração do Backup Automático (Data Lifecycle Manager)
+- A criacao e configuracao de uma instancia EC2 funcional  
+- O gerenciamento de volumes EBS  
+- A aplicacao de tags para automacao  
+- A criacao de politicas de backup com o Data Lifecycle Manager  
+- Boas praticas de manutencao e documentacao de ambientes em nuvem
 
-Foi configurada uma política no AWS Data Lifecycle Manager para realizar snapshots automáticos do volume EBS anexado à instância EC2.
+## 5. Estrutura Recomendada do Repositorio
+README.md
+images/prints
 
-Detalhes da Política
+## 6. Como Reproduzir
 
-Tipo de recurso alvo: Volume
-
-Tag alvo:
-
-Name: Servidor basico para estudos
-
-Descrição da política:
-
-Backup automatico do volume EBS para estudos
-
-
-Role utilizada:
-AWSDataLifecycleManagerDefaultRole
-
-Status: Enabled
-
-3. Agendamento da Política
-
-Nome do agendamento: Schedule 1
-
-Frequência de execução: A cada 12 horas, iniciando às 09:00
-
-Retenção configurada: Manter apenas os 3 snapshots mais recentes
-
-4. Objetivo do Desafio
-
-Este projeto tem como objetivo:
-
-Criar e configurar uma instância EC2 funcional.
-
-Aplicar conhecimentos de EBS, EC2 e DLM na prática.
-
-Configurar políticas de backup automático.
-
-Demonstrar organização, documentação e entendimento dos serviços utilizados.
-
-5. Estrutura Recomendada do Repositório
-/
-├── README.md
-└── images/
-      └── (capturas de tela do ambiente)
+1. Criar uma instancia EC2 Amazon Linux 2023  
+2. Criar ou utilizar um volume EBS e aplicar a tag:
+3. Acessar: EC2 → Elastic Block Store → Lifecycle Manager  
+4. Criar uma nova politica de snapshot  
+5. Configurar:
+- Recursos: Volume  
+- Filtro: Tag acima  
+- Frequencia: 12 horas  
+- Retencao: 3 snapshots  
+6. Habilitar e salvar a politica
